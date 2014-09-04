@@ -1,0 +1,29 @@
+---
+abstract: 'Analyse perl files and report module-related information'
+author:
+  - 'Petr Šabata <contyk@redhat.com>'
+build_requires:
+  Test::More: 0
+  Test::Script: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300023, CPAN::Meta::Converter version 2.132140'
+license: mit
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Tangerine
+requires:
+  Exporter: 0
+  List::MoreUtils: 0
+  Mo: 0
+  Mo::default: 0
+  Mo::xs: 0
+  PPI: 0
+  perl: 5.010
+  strict: 0
+  utf8: 0
+  version: 0.77
+  warnings: 0
+version: 0.01
