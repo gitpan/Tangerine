@@ -1,10 +1,10 @@
 package Tangerine::Hook;
 {
-  $Tangerine::Hook::VERSION = '0.01';
+  $Tangerine::Hook::VERSION = '0.02';
 }
 use strict;
 use warnings;
-use Mo qw(default xs);
+use Mo qw(default);
 
 has type => '';
 has run => undef;

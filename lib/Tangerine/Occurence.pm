@@ -1,10 +1,10 @@
 package Tangerine::Occurence;
 {
-  $Tangerine::Occurence::VERSION = '0.01';
+  $Tangerine::Occurence::VERSION = '0.02';
 }
 use strict;
 use warnings;
-use Mo qw(default xs);
+use Mo qw(default);
 
 has version => '';
 has line => 0;

@@ -16,14 +16,16 @@ meta-spec:
 name: Tangerine
 requires:
   Exporter: 0
+  File::Find::Rule: 0
+  File::Find::Rule::Perl: 0
+  Getopt::Long: 0
   List::MoreUtils: 0
   Mo: 0
   Mo::default: 0
-  Mo::xs: 0
   PPI: 0
-  perl: 5.010
+  perl: 5.016
   strict: 0
   utf8: 0
   version: 0.77
   warnings: 0
-version: 0.01
+version: 0.02

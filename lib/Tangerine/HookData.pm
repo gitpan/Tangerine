@@ -1,10 +1,10 @@
 package Tangerine::HookData;
 {
-  $Tangerine::HookData::VERSION = '0.01';
+  $Tangerine::HookData::VERSION = '0.02';
 }
 use strict;
 use warnings;
-use Mo qw(default xs);
+use Mo qw(default);
 
 has hooks => [];
 has modules => {};

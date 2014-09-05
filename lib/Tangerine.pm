@@ -1,6 +1,6 @@
 package Tangerine;
 {
-  $Tangerine::VERSION = '0.01';
+  $Tangerine::VERSION = '0.02';
 }
 # ABSTRACT: Analyse perl files and report module-related information
 use 5.010;
@@ -8,7 +8,7 @@ use strict;
 use warnings;
 use utf8;
 use PPI;
-use Mo qw(default xs);
+use Mo qw(default);
 use Tangerine::Hook;
 use Tangerine::Occurence;
 use Tangerine::Utils qw(addoccurence);

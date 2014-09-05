@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use 5.010;
+use 5.016;
 
 use ExtUtils::MakeMaker 6.30;
 
@@ -24,17 +24,19 @@ my %WriteMakefileArgs = (
   "NAME" => "Tangerine",
   "PREREQ_PM" => {
     "Exporter" => 0,
+    "File::Find::Rule" => 0,
+    "File::Find::Rule::Perl" => 0,
+    "Getopt::Long" => 0,
     "List::MoreUtils" => 0,
     "Mo" => 0,
     "Mo::default" => 0,
-    "Mo::xs" => 0,
     "PPI" => 0,
     "strict" => 0,
     "utf8" => 0,
     "version" => "0.77",
     "warnings" => 0
   },
-  "VERSION" => "0.01",
+  "VERSION" => "0.02",
   "test" => {
     "TESTS" => "t/*.t"
   }
