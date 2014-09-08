@@ -23,9 +23,10 @@ requires:
   Mo: 0
   Mo::default: 0
   PPI: 0
+  feature: 0
   perl: 5.016
   strict: 0
   utf8: 0
   version: 0.77
   warnings: 0
-version: 0.02
+version: 0.03

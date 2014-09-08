@@ -19,7 +19,9 @@ my %WriteMakefileArgs = (
     "ExtUtils::MakeMaker" => "6.30"
   },
   "DISTNAME" => "Tangerine",
-  "EXE_FILES" => [],
+  "EXE_FILES" => [
+    "bin/tangerine"
+  ],
   "LICENSE" => "mit",
   "NAME" => "Tangerine",
   "PREREQ_PM" => {
@@ -31,12 +33,13 @@ my %WriteMakefileArgs = (
     "Mo" => 0,
     "Mo::default" => 0,
     "PPI" => 0,
+    "feature" => 0,
     "strict" => 0,
     "utf8" => 0,
     "version" => "0.77",
     "warnings" => 0
   },
-  "VERSION" => "0.02",
+  "VERSION" => "0.03",
   "test" => {
     "TESTS" => "t/*.t"
   }
