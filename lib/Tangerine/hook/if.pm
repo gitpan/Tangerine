@@ -1,6 +1,6 @@
 package Tangerine::hook::if;
 {
-  $Tangerine::hook::if::VERSION = '0.03';
+  $Tangerine::hook::if::VERSION = '0.05';
 }
 use 5.010;
 use strict;
@@ -53,7 +53,7 @@ the modified statement for further processing.
 
 =head1 SEE ALSO
 
-L<tangerine>, L<if>
+L<Tangerine>, L<if>
 
 =head1 AUTHOR
 

@@ -1,6 +1,6 @@
 package Tangerine::hook::use;
 {
-  $Tangerine::hook::use::VERSION = '0.03';
+  $Tangerine::hook::use::VERSION = '0.05';
 }
 use 5.010;
 use strict;
@@ -11,7 +11,7 @@ use Tangerine::Occurence;
 
 sub run {
     my $s = shift;
-    if ((any { $s->[0] eq $_ } qw(use no)) && scalar(@$s) >= 3) {
+    if (scalar(@$s) >= 2 && (any { $s->[0] eq $_ } qw(use no))) {
         my $module = $s->[1];
         my ($version) = $s->[2] =~ /^(\d.*)$/o;
         $version //= '';

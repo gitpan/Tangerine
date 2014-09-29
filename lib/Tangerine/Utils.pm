@@ -1,6 +1,6 @@
 package Tangerine::Utils;
 {
-  $Tangerine::Utils::VERSION = '0.03';
+  $Tangerine::Utils::VERSION = '0.05';
 }
 use strict;
 use warnings;
@@ -22,7 +22,7 @@ sub stripquotelike {
                 $_
             }
         } grep {
-            $_ if !/^(,|=>)$/o
+            $_ if !/^(,|=>|;)$/o
         } apply {
             s/^\s+|\s+$//go;
             $_

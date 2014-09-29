@@ -1,19 +1,20 @@
-package Tangerine::hook::require;
+package Tangerine::hook::extends;
 {
-  $Tangerine::hook::require::VERSION = '0.05';
+  $Tangerine::hook::extends::VERSION = '0.05';
 }
 use strict;
 use warnings;
 use Tangerine::HookData;
 use Tangerine::Occurence;
+use Tangerine::Utils qw(stripquotelike);
 
 sub run {
     my $s = shift;
-    if (scalar(@$s) >= 2 && $s->[0] eq 'require') {
-        my $module = $s->[1];
+    if (scalar(@$s) >= 2 && $s->[0] eq 'extends') {
+        my $module = stripquotelike($s->[1]);
         return Tangerine::HookData->new(
             modules => { $module => Tangerine::Occurence->new },
-            ) unless $module =~ /^v?5\..*$/;
+            );
     }
     return;
 }
@@ -28,15 +29,16 @@ __END__
 
 =head1 NAME
 
-Tangerine::hook::require - Process C<require> statements.
+Tangerine::hook::extends - Process C<extends> statements.
 
 =head1 DESCRIPTION
 
-This is a basic C<req> type hook, simply looking for C<require> statements.
+Detect C<extends> statements from L<Moose>, L<Mouse>, L<Moo> or L<Mo>
+modules.  This is C<require>-style dependency.
 
 =head1 SEE ALSO
 
-L<Tangerine>
+L<Tangerine>, L<Moose>, L<Mouse>, L<Moo>, L<Mo>
 
 =head1 AUTHOR
 

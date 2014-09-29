@@ -1,6 +1,6 @@
 package Tangerine::Occurence;
 {
-  $Tangerine::Occurence::VERSION = '0.03';
+  $Tangerine::Occurence::VERSION = '0.05';
 }
 use strict;
 use warnings;

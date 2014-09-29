@@ -1,6 +1,6 @@
 package Tangerine;
 {
-  $Tangerine::VERSION = '0.03';
+  $Tangerine::VERSION = '0.05';
 }
 # ABSTRACT: Analyse perl files and report module-related information
 use 5.010;
@@ -8,6 +8,7 @@ use strict;
 use warnings;
 use utf8;
 use PPI;
+use List::MoreUtils qw(none);
 use Mo qw(default);
 use Tangerine::Hook;
 use Tangerine::Occurence;
@@ -22,7 +23,7 @@ has uses => {};
 my %hooks;
 $hooks{prov} = [ qw(package) ];
 $hooks{req} = [ qw(require) ];
-$hooks{use} = [ qw(use list prefixedlist if) ];
+$hooks{use} = [ qw(use list prefixedlist anymoose if mooselike) ];
 
 sub run {
     my $self = shift;
@@ -43,9 +44,9 @@ sub run {
     }
     @hooks = grep {
             if ($self->mode =~ /^a(ll)?$/o ||
-                $_->type eq 'prov' && $self->mode =~ /^p(rov)?$/o ||
-                $_->type eq 'req' && $self->mode =~ /^(d(ep)?|r(eq)?)$/o ||
-                $_->type eq 'use' && $self->mode =~ /^(d(ep)?|u(se)?)$/o) {
+                $_->type eq 'prov' && $self->mode =~ /^p/o ||
+                $_->type eq 'req' && $self->mode =~ /^[dr]/o ||
+                $_->type eq 'use' && $self->mode =~ /^[du]/o) {
                 $_
             }
         } @hooks;
@@ -71,7 +72,13 @@ sub run {
                     $self->uses(addoccurence($self->uses, $modules));
                 }
                 if ($data->{hooks}) {
-                    push @hooks, @{$data->{hooks}};
+                    for my $newhook (@{$data->{hooks}}) {
+                        next if ($newhook->type eq 'prov') && ($self->mode =~ /^[dru]/o);
+                        next if ($newhook->type eq 'req') && ($self->mode =~ /^[pu]/o);
+                        next if ($newhook->type eq 'use') && ($self->mode =~ /^[pr]/o);
+                        push @hooks, $newhook
+                            if none { $newhook->run eq $_->run } @hooks;
+                    }
                 }
                 if ($data->{children}) {
                     $children = $data->{children};
@@ -111,7 +118,7 @@ Tangerine - Analyse perl files and report module-related information
         join q/, /, sort map $_->line, @{$scanner->requires->{Exporter}}."\n";
 
     my $v = 0;
-    for ( @{$scanner->uses->{Test::More}}) {
+    for ( @{$scanner->uses->{'Test::More'}}) {
         $v = $_->version if $_->version && qv($v) < qv($_->version)
     }
     print "The minimum version of Test::More required by $file is $v\n";
