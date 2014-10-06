@@ -1,6 +1,6 @@
 package Tangerine;
 {
-  $Tangerine::VERSION = '0.05';
+  $Tangerine::VERSION = '0.06';
 }
 # ABSTRACT: Analyse perl files and report module-related information
 use 5.010;

@@ -1,6 +1,6 @@
 package Tangerine::hook::mooselike;
 {
-  $Tangerine::hook::mooselike::VERSION = '0.05';
+  $Tangerine::hook::mooselike::VERSION = '0.06';
 }
 use 5.010;
 use strict;
