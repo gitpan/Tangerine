@@ -1,6 +1,6 @@
 package Tangerine;
 {
-  $Tangerine::VERSION = '0.06';
+  $Tangerine::VERSION = '0.10';
 }
 # ABSTRACT: Analyse perl files and report module-related information
 use 5.010;
@@ -10,6 +10,7 @@ use utf8;
 use PPI;
 use List::MoreUtils qw(none);
 use Mo qw(default);
+use Scalar::Util qw(blessed);
 use Tangerine::Hook;
 use Tangerine::Occurence;
 use Tangerine::Utils qw(addoccurence);
@@ -22,8 +23,8 @@ has uses => {};
 
 my %hooks;
 $hooks{prov} = [ qw(package) ];
-$hooks{req} = [ qw(require) ];
-$hooks{use} = [ qw(use list prefixedlist anymoose if mooselike) ];
+$hooks{req} = [ qw(require xxx) ];
+$hooks{use} = [ qw(use list prefixedlist anymoose if mooselike tests xxx) ];
 
 sub run {
     my $self = shift;
@@ -38,8 +39,7 @@ sub run {
         for my $hname (@{$hooks{$type}}) {
             my $hook = "Tangerine::hook::$hname";
             eval "require $hook";
-            $hook.= '::run';
-            push @hooks, Tangerine::Hook->new(type => $type, run => \&$hook);
+            push @hooks, $hook->new(type => $type);
         }
     }
     @hooks = grep {
@@ -59,9 +59,13 @@ sub run {
             next STATEMENT
         }
         for my $hook (@hooks) {
-            if (my $data = $hook->run->($children)) {
+            if (my $data = $hook->run($children)) {
                 my $modules = $data->{modules};
                 for my $k (keys %$modules) {
+                    if ($k =~ /[\$%@\*]/o || $k =~ /^('|"|qq?\s*[^\w])/o) {
+                        delete $modules->{$k};
+                        next
+                    }
                     $modules->{$k}->line($statement->line_number);
                 }
                 if ($hook->type eq 'prov') {
@@ -77,7 +81,10 @@ sub run {
                         next if ($newhook->type eq 'req') && ($self->mode =~ /^[pu]/o);
                         next if ($newhook->type eq 'use') && ($self->mode =~ /^[pr]/o);
                         push @hooks, $newhook
-                            if none { $newhook->run eq $_->run } @hooks;
+                            if none {
+                                blessed($newhook) eq blessed($_) &&
+                                $newhook->type eq $_->type
+                            } @hooks;
                     }
                 }
                 if ($data->{children}) {

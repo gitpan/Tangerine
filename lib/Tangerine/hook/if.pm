@@ -1,22 +1,26 @@
 package Tangerine::hook::if;
 {
-  $Tangerine::hook::if::VERSION = '0.06';
+  $Tangerine::hook::if::VERSION = '0.10';
 }
 use 5.010;
 use strict;
 use warnings;
 use List::MoreUtils qw(any);
+use Mo;
 use Tangerine::HookData;
 use Tangerine::Utils qw(stripquotelike);
 
+extends 'Tangerine::Hook';
+
 sub run {
-    my $s = shift;
+    my ($self, $s) = @_;
     if ((any { $s->[0] eq $_ } qw(use no)) &&
         scalar(@$s) > 3 && $s->[1] eq 'if') {
         my ($version) = $s->[2] =~ /^(\d.*)$/o;
         $version //= '';
-        my ($depth, $index) = (0, 1);
-        for ($index = 2; $index < $#$s; $index++) {
+        my $voffset = $version ? 3 : 2;
+        my ($depth, $index) = (0, 0);
+        for ($index = $voffset; $index < $#$s; $index++) {
             my $token = $s->[$index];
             $depth++ if ($token eq '[' || $token eq '{' || $token eq '(');
             $depth-- if ($token eq ']' || $token eq '}' || $token eq ')');

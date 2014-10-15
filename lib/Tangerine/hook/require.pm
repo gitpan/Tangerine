@@ -1,15 +1,19 @@
 package Tangerine::hook::require;
 {
-  $Tangerine::hook::require::VERSION = '0.06';
+  $Tangerine::hook::require::VERSION = '0.10';
 }
 use strict;
 use warnings;
+use Mo;
 use Tangerine::HookData;
 use Tangerine::Occurence;
 
+extends 'Tangerine::Hook';
+
 sub run {
-    my $s = shift;
-    if (scalar(@$s) >= 2 && $s->[0] eq 'require') {
+    my ($self, $s) = @_;
+    if (scalar(@$s) > 1 && $s->[0] eq 'require') {
+        return if $s->[1] eq ';';
         my $module = $s->[1];
         return Tangerine::HookData->new(
             modules => { $module => Tangerine::Occurence->new },

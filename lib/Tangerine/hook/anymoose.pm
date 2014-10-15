@@ -1,23 +1,27 @@
 package Tangerine::hook::anymoose;
 {
-  $Tangerine::hook::anymoose::VERSION = '0.06';
+  $Tangerine::hook::anymoose::VERSION = '0.10';
 }
 use 5.010;
 use strict;
 use warnings;
 use List::MoreUtils qw(any);
+use Mo;
 use Tangerine::HookData;
 use Tangerine::Occurence;
 use Tangerine::Utils qw(stripquotelike);
 
+extends 'Tangerine::Hook';
+
 sub run {
-    my $s = shift;
+    my ($self, $s) = @_;
     if ((any { $s->[0] eq $_ } qw(use no)) &&
         scalar(@$s) > 2 && $s->[1] eq 'Any::Moose') {
             my ($version) = $s->[2] =~ /^(\d.*)$/o;
             $version //= '';
-            my $param = stripquotelike($s->[$version ? 3 : 2])
-                if $s->[$version ? 3 : 2] ne ';';
+            my $voffset = $version ? 3 : 2;
+            my $param = stripquotelike($s->[$voffset])
+                if $s->[$voffset] && ($s->[$voffset] ne ';');
             my $module = 'Mouse';
             $module.= '::Role' if $param && ($param eq 'Role');
             return Tangerine::HookData->new(

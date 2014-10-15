@@ -1,6 +1,6 @@
 package Tangerine::HookData;
 {
-  $Tangerine::HookData::VERSION = '0.06';
+  $Tangerine::HookData::VERSION = '0.10';
 }
 use strict;
 use warnings;

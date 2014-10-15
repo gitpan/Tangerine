@@ -1,31 +1,26 @@
 package Tangerine::hook::mooselike;
 {
-  $Tangerine::hook::mooselike::VERSION = '0.06';
+  $Tangerine::hook::mooselike::VERSION = '0.10';
 }
 use 5.010;
 use strict;
 use warnings;
 use List::MoreUtils qw(any);
+use Mo;
 use Tangerine::Hook;
 use Tangerine::HookData;
 
+extends 'Tangerine::Hook';
+
 sub run {
-    my $s = shift;
+    my ($self, $s) = @_;
     if ((any { $s->[0] eq $_ } qw(use no)) &&
-        scalar(@$s) > 2 && (any { $s->[1] eq $_ } qw(Moose Mouse Moo Mo))) {
+        scalar(@$s) > 1 && (any { $s->[1] eq $_ } qw(Moose Mouse Moo Mo))) {
         require Tangerine::hook::extends;
-        my @hooks = (
-            Tangerine::Hook->new(
-                type => 'req',
-                run => \&Tangerine::hook::extends::run,
-            )
-        );
+        my @hooks = (Tangerine::hook::extends->new(type => 'req'));
         if ($s->[1] ne 'Mo') {
             require Tangerine::hook::with;
-            push @hooks, Tangerine::Hook->new(
-                type => 'req',
-                run => \&Tangerine::hook::with::run,
-            );
+            push @hooks, Tangerine::hook::with->new(type => 'req');
         }
         return Tangerine::HookData->new( hooks => [ @hooks ] );
     }

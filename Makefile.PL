@@ -33,12 +33,13 @@ my %WriteMakefileArgs = (
     "Mo" => 0,
     "Mo::default" => 0,
     "PPI" => 0,
+    "Scalar::Util" => 0,
     "strict" => 0,
     "utf8" => 0,
     "version" => "0.77",
     "warnings" => 0
   },
-  "VERSION" => "0.06",
+  "VERSION" => "0.10",
   "test" => {
     "TESTS" => "t/*.t"
   }

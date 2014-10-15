@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 20;
+use Test::More tests => 26;
 use Tangerine;
 
 my $scanner = Tangerine->new(file => 't/data/list');
@@ -32,13 +32,25 @@ my %expected = (
         count => 1,
         lines => [ 5 ],
     },
+    India => {
+        count => 1,
+        lines => [ 6 ],
+    },
+    Julliet => {
+        count => 1,
+        lines => [ 7 ],
+    },
     aliased => {
         count => 1,
         lines => [ 3 ],
     },
     base => {
-        count => 3,
-        lines => [ 1, 4, 5 ],
+        count => 4,
+        lines => [ 1, 4, 5, 8 ],
+    },
+    ok => {
+        count => 2,
+        lines => [ 6, 7 ],
     },
     parent => {
         count => 1,
@@ -50,6 +62,6 @@ is_deeply([sort keys %{$scanner->uses}], [sort keys %expected], 'List uses');
 for (sort keys %expected) {
     is(scalar @{$scanner->uses->{$_}}, $expected{$_}->{count},
         "List uses count ($_)");
-    is_deeply([ sort map { $_->line } @{$scanner->uses->{$_}} ],
+    is_deeply([ sort { $a <=> $b } map { $_->line } @{$scanner->uses->{$_}} ],
         $expected{$_}->{lines}, "List uses line number ($_)");
 }

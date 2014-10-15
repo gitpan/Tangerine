@@ -21,8 +21,11 @@ lib/Tangerine/hook/mooselike.pm
 lib/Tangerine/hook/package.pm
 lib/Tangerine/hook/prefixedlist.pm
 lib/Tangerine/hook/require.pm
+lib/Tangerine/hook/testloading.pm
+lib/Tangerine/hook/tests.pm
 lib/Tangerine/hook/use.pm
 lib/Tangerine/hook/with.pm
+lib/Tangerine/hook/xxx.pm
 t/00-compile.t
 t/01-basic.t
 t/02-list.t
@@ -32,6 +35,9 @@ t/05-perlversion.t
 t/06-if.t
 t/07-anymoose.t
 t/08-roles.t
+t/09-tests.t
+t/10-variables.t
+t/11-xxx.t
 t/data/anymoose
 t/data/basic
 t/data/if
@@ -39,5 +45,8 @@ t/data/list
 t/data/perlversion
 t/data/prefixedlist
 t/data/roles
+t/data/tests
+t/data/variables
 t/data/versioned
+t/data/xxx
 t/release-pod-syntax.t

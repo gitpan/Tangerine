@@ -1,19 +1,23 @@
 package Tangerine::hook::use;
 {
-  $Tangerine::hook::use::VERSION = '0.06';
+  $Tangerine::hook::use::VERSION = '0.10';
 }
 use 5.010;
 use strict;
 use warnings;
 use List::MoreUtils qw(any);
+use Mo;
 use Tangerine::HookData;
 use Tangerine::Occurence;
 
+extends 'Tangerine::Hook';
+
 sub run {
-    my $s = shift;
-    if (scalar(@$s) >= 2 && (any { $s->[0] eq $_ } qw(use no))) {
+    my ($self, $s) = @_;
+    if (scalar(@$s) > 1 && (any { $s->[0] eq $_ } qw(use no))) {
+        return if $s->[1] eq ';';
         my $module = $s->[1];
-        my ($version) = $s->[2] =~ /^(\d.*)$/o;
+        my ($version) = $s->[2] && $s->[2] =~ /^(\d.*)$/o;
         $version //= '';
         return Tangerine::HookData->new(
             modules => {

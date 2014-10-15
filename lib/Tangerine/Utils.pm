@@ -1,6 +1,6 @@
 package Tangerine::Utils;
 {
-  $Tangerine::Utils::VERSION = '0.06';
+  $Tangerine::Utils::VERSION = '0.10';
 }
 use strict;
 use warnings;

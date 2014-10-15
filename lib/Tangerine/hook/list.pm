@@ -1,35 +1,39 @@
 package Tangerine::hook::list;
 {
-  $Tangerine::hook::list::VERSION = '0.06';
+  $Tangerine::hook::list::VERSION = '0.10';
 }
 use 5.010;
 use strict;
 use warnings;
 use List::MoreUtils qw(any);
+use Mo;
 use Tangerine::HookData;
 use Tangerine::Occurence;
 use Tangerine::Utils qw(stripquotelike);
 
+extends 'Tangerine::Hook';
+
 sub run {
-    my $s = shift;
-    if ((any { $s->[0] eq $_ } qw(use no)) && scalar(@$s) >= 3 &&
-        (any { $s->[1] eq $_ } qw(aliased base parent))) {
+    my ($self, $s) = @_;
+    if ((any { $s->[0] eq $_ } qw(use no)) && scalar(@$s) > 2 &&
+        (any { $s->[1] eq $_ } qw(aliased base ok parent))) {
         my ($version) = $s->[2] =~ /^(\d.*)$/o;
         $version //= '';
+        my $voffset = $version ? 3 : 2;
         my @args;
-        if (scalar(@$s) > 3) {
+        if (scalar(@$s) > $voffset) {
+            return if $s->[$voffset] eq ';';
             @args = @$s;
-            @args = @args[($version ? 3 : 2) .. $#args-1];
+            @args = @args[($voffset) .. $#args];
             @args = grep { !/^-norequire$/ } @args
                 if $s->[1] eq 'parent';
             @args = stripquotelike(@args);
         }
+        @args = $args[0] if $s->[1] eq 'ok';
         return Tangerine::HookData->new(
             modules => {
                 map {
-                    ( $_ => Tangerine::Occurence->new(
-                        version => $version,
-                        ) )
+                    ( $_ => Tangerine::Occurence->new() )
                     } @args,
                 },
             );
@@ -54,11 +58,12 @@ Tangerine::hook::list - Process simple module lists.
 This hook catches C<use> statements with modules loading more modules
 listed as their arguments.
 
-Currently this hook knows about L<aliased>, L<base> and L<parent>.
+Currently this hook knows about L<aliased>, L<base>, L<Test::use::ok>
+and L<parent>.
 
 =head1 SEE ALSO
 
-L<Tangerine>, L<aliased>, L<base>, L<parent>
+L<Tangerine>, L<aliased>, L<base>, L<Test::use::ok>, L<parent>
 
 =head1 AUTHOR
 

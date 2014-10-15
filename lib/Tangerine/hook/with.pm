@@ -1,16 +1,20 @@
 package Tangerine::hook::with;
 {
-  $Tangerine::hook::with::VERSION = '0.06';
+  $Tangerine::hook::with::VERSION = '0.10';
 }
 use strict;
 use warnings;
+use Mo;
 use Tangerine::HookData;
 use Tangerine::Occurence;
 use Tangerine::Utils qw(stripquotelike);
 
+extends 'Tangerine::Hook';
+
 sub run {
-    my $s = shift;
-    if (scalar(@$s) >= 2 && $s->[0] eq 'with') {
+    my ($self, $s) = @_;
+    if (scalar(@$s) > 1 && $s->[0] eq 'with') {
+        return if $s->[1] eq ';';
         my @modules = stripquotelike((@$s)[1..$#$s]);
         return Tangerine::HookData->new(
             modules => { map { ($_ => Tangerine::Occurence->new) } @modules },

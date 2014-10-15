@@ -1,15 +1,19 @@
 package Tangerine::hook::package;
 {
-  $Tangerine::hook::package::VERSION = '0.06';
+  $Tangerine::hook::package::VERSION = '0.10';
 }
 use strict;
 use warnings;
+use Mo;
 use Tangerine::HookData;
 use Tangerine::Occurence;
 
+extends 'Tangerine::Hook';
+
 sub run {
-    my $s = shift;
-    if ($s->[0] eq 'package' && scalar(@$s) == 3) {
+    my ($self, $s) = @_;
+    if ($s->[0] eq 'package' && scalar(@$s) > 1) {
+        return if $s->[1] eq ';';
         return Tangerine::HookData->new(
             modules => {
                 $s->[1] => Tangerine::Occurence->new,

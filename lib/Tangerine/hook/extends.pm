@@ -1,16 +1,20 @@
 package Tangerine::hook::extends;
 {
-  $Tangerine::hook::extends::VERSION = '0.06';
+  $Tangerine::hook::extends::VERSION = '0.10';
 }
 use strict;
 use warnings;
+use Mo;
 use Tangerine::HookData;
 use Tangerine::Occurence;
 use Tangerine::Utils qw(stripquotelike);
 
+extends 'Tangerine::Hook';
+
 sub run {
-    my $s = shift;
-    if (scalar(@$s) >= 2 && $s->[0] eq 'extends') {
+    my ($self, $s) = @_;
+    if (scalar(@$s) > 1 && $s->[0] eq 'extends') {
+        return if $s->[1] eq ';';
         my $module = stripquotelike($s->[1]);
         return Tangerine::HookData->new(
             modules => { $module => Tangerine::Occurence->new },
