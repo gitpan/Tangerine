@@ -1,6 +1,6 @@
 package Tangerine::hook::list;
 {
-  $Tangerine::hook::list::VERSION = '0.10';
+  $Tangerine::hook::list::VERSION = '0.11';
 }
 use 5.010;
 use strict;
@@ -29,7 +29,7 @@ sub run {
                 if $s->[1] eq 'parent';
             @args = stripquotelike(@args);
         }
-        @args = $args[0] if $s->[1] eq 'ok';
+        @args = $args[0] if any { $s->[1] eq $_ } qw/aliased ok/;
         return Tangerine::HookData->new(
             modules => {
                 map {

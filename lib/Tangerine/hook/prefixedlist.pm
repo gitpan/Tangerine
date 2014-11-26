@@ -1,6 +1,6 @@
 package Tangerine::hook::prefixedlist;
 {
-  $Tangerine::hook::prefixedlist::VERSION = '0.10';
+  $Tangerine::hook::prefixedlist::VERSION = '0.11';
 }
 use 5.010;
 use strict;

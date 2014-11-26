@@ -1,6 +1,6 @@
 package Tangerine::hook::use;
 {
-  $Tangerine::hook::use::VERSION = '0.10';
+  $Tangerine::hook::use::VERSION = '0.11';
 }
 use 5.010;
 use strict;
@@ -25,7 +25,7 @@ sub run {
                     version => $version,
                     ),
                 },
-            ) unless $module =~ /^v?5\..*$/;
+            ) unless $module =~ /^v?5(\..*)?$/;
     }
     return;
 }

@@ -1,6 +1,6 @@
 package Tangerine;
 {
-  $Tangerine::VERSION = '0.10';
+  $Tangerine::VERSION = '0.11';
 }
 # ABSTRACT: Analyse perl files and report module-related information
 use 5.010;
@@ -62,9 +62,17 @@ sub run {
             if (my $data = $hook->run($children)) {
                 my $modules = $data->{modules};
                 for my $k (keys %$modules) {
-                    if ($k =~ /[\$%@\*]/o || $k =~ /^('|"|qq?\s*[^\w])/o) {
+                    if ($k =~ /[\$%@\*]/o ||
+                        $k =~ /^('|"|qq?\s*[^\w])/o ||
+                        $k =~ /\//o) {
                         delete $modules->{$k};
                         next
+                    }
+                    if (my ($class) = ($k =~ /^(.+)::$/o)) {
+                        $modules->{$class} = $modules->{$k}
+                            unless exists $modules->{$class};
+                        delete $modules->{$k};
+                        $k = $class
                     }
                     $modules->{$k}->line($statement->line_number);
                 }

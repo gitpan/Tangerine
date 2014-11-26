@@ -1,6 +1,6 @@
 package Tangerine::hook::testloading;
 {
-  $Tangerine::hook::testloading::VERSION = '0.10';
+  $Tangerine::hook::testloading::VERSION = '0.11';
 }
 use strict;
 use warnings;

@@ -1,6 +1,6 @@
 package Tangerine::hook::anymoose;
 {
-  $Tangerine::hook::anymoose::VERSION = '0.10';
+  $Tangerine::hook::anymoose::VERSION = '0.11';
 }
 use 5.010;
 use strict;

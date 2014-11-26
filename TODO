@@ -4,3 +4,9 @@ Something to work on:
 * Test::Requires
 * A new Tangerine method to report required perl version
 * Allow users to specify additional hooks to run
+* Convert versions in use statements as required, e.g.
+  use Exporter 5.7012345_6789 tries to load
+  Exporter 5.701234568
+* Support Module::Runtime (e.g. use_module())
+* The script is a mess; refactor it
+* The script also needs a manpage

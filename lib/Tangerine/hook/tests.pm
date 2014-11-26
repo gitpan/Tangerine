@@ -1,6 +1,6 @@
 package Tangerine::hook::tests;
 {
-  $Tangerine::hook::tests::VERSION = '0.10';
+  $Tangerine::hook::tests::VERSION = '0.11';
 }
 use 5.010;
 use strict;

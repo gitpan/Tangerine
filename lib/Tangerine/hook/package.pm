@@ -1,6 +1,6 @@
 package Tangerine::hook::package;
 {
-  $Tangerine::hook::package::VERSION = '0.10';
+  $Tangerine::hook::package::VERSION = '0.11';
 }
 use strict;
 use warnings;
